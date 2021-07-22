@@ -7,7 +7,8 @@ const router = express.Router();
 const ctrl = require('./home.ctrl');
 
 //router 는 단순히 해당 도메인이 들어왔을 때  요청을 연결해주는 역할 뿐
-router.get("/", ctrl.home);
-router.get("/login", ctrl.login);
+router.get("/", ctrl.output.home);
+router.get("/login", ctrl.output.login);
+router.post("/login", ctrl.process.login);
 
 module.exports = router;
