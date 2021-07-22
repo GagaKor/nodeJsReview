@@ -1,14 +1,29 @@
 {
-  "name": "todoapp",
+  "name": "TODOAPP",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "app.js",
+  "bin": {
+    "TODOAPP": "www.js"
+  },
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
   "scripts": {
+    "start": "nodemon ./bin/www.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GagaKor/nodeJsReview.git"
+  },
+  "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.17.1"
-  }
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GagaKor/nodeJsReview/issues"
+  },
+  "homepage": "https://github.com/GagaKor/nodeJsReview#readme"
 }
