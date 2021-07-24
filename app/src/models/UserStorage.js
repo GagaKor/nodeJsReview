@@ -1,39 +1,29 @@
 "use strict";
+
+const db = require("../config/db");
+
 class UserStorage {
-  static #users = {
-    id: ["1234", "나개발", "김팀장"],
-    password: ["1234", "1234", "123456"],
-    name: ["1234", "나개발", "김팀장"],
-  };
-  static getUsers(...fields) {
-    const users = this.#users;
-    const newUsers = fields.reduce((newUsers, field) => {
-      if (users.hasOwnProperty(field)) {
-        newUsers[field] = users[field];
-      }
-      return newUsers;
-    }, {});
-    return newUsers;
-  }
 
-  static getUserInfo(id) {
-    const users = this.#users;
-    const idx = users.id.indexOf(id);
-    const usersKeys = Object.keys(users); // => [id, psword, name]
-    const userInfo = usersKeys.reduce((newUser, info) => {
-      newUser[info] = users[info][idx];
-      return newUser;
-    }, {});
+static getUserInfo(id){
+  return new Promise((resolve, reject)=>{
+    const query = "SELECT * FROM users WHERE id = ?";
+  db.query(query, [id], (err, data)=>{
+    if(err) reject(`${err}`);
+    resolve(data[0]);
+  });
+});
+}
 
-    return userInfo;
-  }
-
-  static save(userInfo){
-    const users = this.#users;
-    users.id.push(userInfo.id);
-    users.name.push(userInfo.name);
-    users.password.push(userInfo.password);
-  }
+static async save(userInfo){
+  return new Promise((resolve, reject)=>{
+    const query = "INSERT INTO users(id, name, `password`) VALUES(?, ?, ?)";
+  db.query(query, [userInfo.id, userInfo.name, userInfo.password],
+    (err)=>{
+    if(err) reject(`${err}`);
+    resolve({success : true});
+  });
+});
+}
 }
 
 module.exports = UserStorage;
