@@ -2,9 +2,14 @@
 
 // 모듈
 const express = require("express");
-const app = express();
 const dotenv = require("dotenv");
+const morgan = require('morgan');
+
+
+const app = express();
 dotenv.config();
+
+const accessLogStream = require("./src/config/log");
 // 라우팅
 const home = require("./src/routes/home");
 
@@ -15,6 +20,8 @@ app.use(express.static(`${__dirname}/src/public`));
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+app.use(morgan("dev"));
+app.use(morgan("common",{stream : accessLogStream}));
 
 //express 4.X 버전부터  body-parser 모듈을 따로 설치해 사용할 필요가 없다
 // const bodyParser = require("body-parser");
